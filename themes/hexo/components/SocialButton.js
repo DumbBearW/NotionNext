@@ -41,6 +41,33 @@ const SocialButton = () => {
   return (
     <div className='w-full justify-center flex-wrap flex'>
       <div className='space-x-3 text-xl flex items-center text-gray-600 dark:text-gray-300 '>
+        {CONTACT_DISCORD && (
+          <a
+            target='_blank'
+            rel='noreferrer'
+            title={'discord'}
+            href={CONTACT_DISCORD}>
+            <i className='transform hover:scale-125 duration-150 fab fa-discord dark:hover:text-indigo-400 hover:text-indigo-600' />
+          </a>
+        )}
+        {CONTACT_STEAM && (
+          <a
+            target='_blank'
+            rel='noreferrer'
+            title={'steam'}
+            href={CONTACT_STEAM}>
+            <i className='transform hover:scale-125 duration-150 fab fa-steam dark:hover:text-indigo-400 hover:text-indigo-600' />
+          </a>
+        )}
+        {CONTACT_XBOX && (
+          <a
+            target='_blank'
+            rel='noreferrer'
+            title={'xbox'}
+            href={CONTACT_XBOX}>
+            <i className='transform hover:scale-125 duration-150 fab fa-xbox dark:hover:text-indigo-400 hover:text-indigo-600' />
+          </a>
+        )}
         {CONTACT_GITHUB && (
           <a
             target='_blank'
