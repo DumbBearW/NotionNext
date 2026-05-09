@@ -42,15 +42,45 @@ const SocialButton = () => {
   const emailIcon = useRef(null)
   const renderMaskIcon = src => (
     <span
-      className='inline-block transform hover:scale-125 duration-150 dark:hover:text-indigo-400 hover:text-indigo-600'
-      style={{
-        width: '1em',
-        height: '1em',
-        backgroundColor: 'currentColor',
-        WebkitMask: `url("${src}") center / contain no-repeat`,
-        mask: `url("${src}") center / contain no-repeat`
-      }}
-    />
+      className='inline-flex h-[1em] w-[1em] items-center justify-center align-[-0.125em] leading-none transform hover:scale-125 duration-150 dark:hover:text-indigo-400 hover:text-indigo-600'
+      aria-hidden='true'
+    >
+      <span
+        className='block h-[0.95em] w-[0.95em]'
+        style={{
+          backgroundColor: 'currentColor',
+          WebkitMask: `url("${src}") center / contain no-repeat`,
+          mask: `url("${src}") center / contain no-repeat`
+        }}
+      />
+    </span>
+  )
+
+  const renderSvgLink = (href, title, iconSrc) => (
+    <a
+      className='inline-flex items-center justify-center leading-none'
+      target='_blank'
+      rel='noreferrer'
+      title={title}
+      href={href}>
+      {renderMaskIcon(iconSrc)}
+    </a>
+  )
+
+  const renderImageLink = (href, title, iconSrc, alt) => (
+    <a
+      className='inline-flex h-[1em] w-[1em] items-center justify-center leading-none'
+      target='_blank'
+      rel='noreferrer'
+      title={title}
+      href={href}>
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        className='block h-[1em] w-[1em] object-contain align-middle transform hover:scale-125 duration-150'
+        src={iconSrc}
+        alt={alt}
+      />
+    </a>
   )
 
   return (
@@ -187,24 +217,15 @@ const SocialButton = () => {
             />
           </a>
         )}
-        {CONTACT_NINTENDO && (
-          <a
-            target='_blank'
-            rel='noreferrer'
-            title={'Nintendo'}
-            href={CONTACT_NINTENDO}>
-            {renderMaskIcon('/svg/ns.svg')}
-          </a>
-        )}
-        {CONTACT_EPICGAMES && (
-          <a
-            target='_blank'
-            rel='noreferrer'
-            title={'EpicGames'}
-            href={CONTACT_EPICGAMES}>
-            {renderMaskIcon('/svg/epicgames.svg')}
-          </a>
-        )}
+        {CONTACT_NINTENDO &&
+          renderSvgLink(CONTACT_NINTENDO, 'Nintendo', '/svg/ns.svg')}
+        {CONTACT_EPICGAMES &&
+          renderImageLink(
+            CONTACT_EPICGAMES,
+            'EpicGames',
+            '/svg/epicgames.svg',
+            'EpicGames'
+          )}
         {CONTACT_ZHISHIXINGQIU && (
           <a
             target='_blank'
