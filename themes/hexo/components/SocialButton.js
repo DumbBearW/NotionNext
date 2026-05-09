@@ -14,8 +14,10 @@ const SocialButton = () => {
   const CONTACT_TWITTER = siteConfig('CONTACT_TWITTER')
   const CONTACT_TELEGRAM = siteConfig('CONTACT_TELEGRAM')
 
-  const CONTACT_STEAM = siteConfig('CONTACT_STEAM')
+  const CONTACT_NINTENDO = siteConfig('CONTACT_NINTENDO')
   const CONTACT_XBOX = siteConfig('CONTACT_XBOX')
+  const CONTACT_STEAM = siteConfig('CONTACT_STEAM')
+  const CONTACT_EPICGAMES = siteConfig('CONTACT_EPICGAMES')
   const CONTACT_LINKEDIN = siteConfig('CONTACT_LINKEDIN')
   const CONTACT_WEIBO = siteConfig('CONTACT_WEIBO')
   const CONTACT_INSTAGRAM = siteConfig('CONTACT_INSTAGRAM')
@@ -170,6 +172,34 @@ const SocialButton = () => {
               className='transform hover:scale-125 duration-150 w-6'
               src='/svg/xiaohongshu.svg'
               alt='小红书'
+            />
+          </a>
+        )}
+        {CONTACT_NINTENDO && (
+          <a
+            target='_blank'
+            rel='noreferrer'
+            title={'任天堂'}
+            href={CONTACT_NINTENDO}>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              className='transform hover:scale-125 duration-150 w-6'
+              src='/svg/ns.svg'
+              alt='任天堂'
+            />
+          </a>
+        )}
+        {CONTACT_EPICGAMES && (
+          <a
+            target='_blank'
+            rel='noreferrer'
+            title={'EpicGames'}
+            href={CONTACT_EPICGAMES}>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              className='transform hover:scale-125 duration-150 w-6'
+              src='/svg/epicgames.svg'
+              alt='EpicGames'
             />
           </a>
         )}

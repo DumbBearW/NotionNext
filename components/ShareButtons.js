@@ -43,7 +43,7 @@ const SHARE_BG_CLASS = {
   line: 'bg-green-500',
   reddit: 'bg-orange-500',
   email: 'bg-gray-600',
-  twitter: 'bg-black',
+  twitter: 'bg-[#1da1f2]',
   telegram: 'bg-sky-500',
   whatsapp: 'bg-green-600',
   linkedin: 'bg-blue-700',
@@ -60,6 +60,10 @@ const SHARE_BG_CLASS = {
   instapaper: 'bg-zinc-700',
   hatena: 'bg-blue-500',
   threads: 'bg-zinc-900'
+}
+
+const SHARE_ICON_SIZE_CLASS = {
+  twitter: 'text-base'
 }
 
 /**
@@ -177,7 +181,7 @@ const ShareButtons = ({ post }) => {
         key={service}
         onClick={() => openShareWindow(shareLink)}
         className={`${BASE_BUTTON_CLASS} ${bgClass}`}>
-        <i className={`${iconClass} text-sm`} />
+        <i className={`${iconClass} ${SHARE_ICON_SIZE_CLASS[service] || 'text-sm'}`} />
       </button>
     )
   }
