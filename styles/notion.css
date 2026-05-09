@@ -730,12 +730,22 @@ svg.notion-page-icon {
   width: 100%;
   white-space: pre-wrap;
   word-break: break-word;
+  text-align: justify;
+  text-align-last: start;
+  text-justify: inter-character;
   padding: 3px 2px !important;
   margin: 1px 0 !important;
 }
 
 .notion-text:first-child {
   margin-top: 2px;
+}
+
+.notion-simple-table .notion-text,
+.notion-callout .notion-text {
+  text-align: start;
+  text-align-last: auto;
+  text-justify: auto;
 }
 
 .notion-text-children {
@@ -2024,18 +2034,29 @@ html.dark .notion-callout .notion-text {
   height: auto !important;
 }
 
-/* simple table设置 */
-table,
-thead,
-tbody {
-  display: block;
+.notion-simple-table {
+  display: table !important;
+  width: auto !important;
+  max-width: 100%;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  table-layout: auto !important;
+  border-collapse: collapse !important;
+  white-space: nowrap;
 }
 
-thead,
-tbody tr {
-  display: table;
-  width: 100%;
-  table-layout: fixed;
+/* simple table设置 */
+.notion-simple-table thead,
+.notion-simple-table tbody {
+  display: table-row-group !important;
+  width: auto !important;
+}
+
+.notion-simple-table tr,
+.notion-simple-table-row {
+  display: table-row !important;
+  width: auto !important;
+  table-layout: auto !important;
 }
 
 .notion-collection-card {
@@ -2102,7 +2123,13 @@ code.language-mermaid {
 } */
 
 .notion-simple-table td {
-  border: 1px solid var(#eee) !important;
+  display: table-cell !important;
+  border: 1px solid rgba(148, 163, 184, 0.5) !important;
+  padding: 8px 12px !important;
+}
+
+html.dark .notion-simple-table td {
+  border-color: rgba(226, 232, 240, 0.28) !important;
 }
 
 /* 视频尺寸bug */
