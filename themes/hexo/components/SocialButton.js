@@ -16,6 +16,7 @@ const SocialButton = () => {
 
   const CONTACT_STEAM = siteConfig('CONTACT_STEAM')
   const CONTACT_XBOX = siteConfig('CONTACT_XBOX')
+  const CONTACT_LINKEDIN = siteConfig('CONTACT_LINKEDIN')
   const CONTACT_WEIBO = siteConfig('CONTACT_WEIBO')
   const CONTACT_INSTAGRAM = siteConfig('CONTACT_INSTAGRAM')
   const CONTACT_EMAIL = siteConfig('CONTACT_EMAIL')
