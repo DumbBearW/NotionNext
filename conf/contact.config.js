@@ -9,6 +9,9 @@ module.exports = {
         unescape(encodeURIComponent(process.env.NEXT_PUBLIC_CONTACT_EMAIL))
       )) ||
     '', // 邮箱地址 例如mail@tangly1024.com
+  CONTACT_DSICORD: process.env.NEXT_PUBLIC_CONTACT_DSICORD || 'https://discordapp.com/users/7143',
+  CONTACT_STEAM: process.env.NEXT_PUBLIC_CONTACT_STEAM || 'https://steamcommunity.com/id/DumbBearWang',
+  CONTACT_XBOX: process.env.NEXT_PUBLIC_CONTACT_XBOX || 'https://xbox.com/play/user/cfandora',
   CONTACT_WEIBO: process.env.NEXT_PUBLIC_CONTACT_WEIBO || '', // 你的微博个人主页
   CONTACT_TWITTER: process.env.NEXT_PUBLIC_CONTACT_TWITTER || '', // 你的twitter个人主页
   CONTACT_GITHUB: process.env.NEXT_PUBLIC_CONTACT_GITHUB || '', // 你的github个人主页 例如 https://github.com/tangly1024

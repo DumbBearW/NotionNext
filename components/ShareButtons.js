@@ -31,7 +31,10 @@ const SHARE_ICON_CLASS = {
   pocket: 'fas fa-bookmark',
   instapaper: 'fas fa-newspaper',
   hatena: 'fas fa-h',
-  threads: 'fas fa-at'
+  threads: 'fas fa-at',
+  steam: 'fab fa-steam',
+  discord: 'fab fa-discord',
+  xbox: 'fab fa-xbox'
 }
 
 const SHARE_BG_CLASS = {
