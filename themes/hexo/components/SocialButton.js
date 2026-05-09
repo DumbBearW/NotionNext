@@ -40,6 +40,18 @@ const SocialButton = () => {
   }
 
   const emailIcon = useRef(null)
+  const renderMaskIcon = src => (
+    <span
+      className='inline-block transform hover:scale-125 duration-150 dark:hover:text-indigo-400 hover:text-indigo-600'
+      style={{
+        width: '1em',
+        height: '1em',
+        backgroundColor: 'currentColor',
+        WebkitMask: `url("${src}") center / contain no-repeat`,
+        mask: `url("${src}") center / contain no-repeat`
+      }}
+    />
+  )
 
   return (
     <div className='w-full justify-center flex-wrap flex'>
@@ -48,7 +60,7 @@ const SocialButton = () => {
           <a
             target='_blank'
             rel='noreferrer'
-            title={'discord'}
+            title={'Discord'}
             href={CONTACT_DISCORD}>
             <i className='transform hover:scale-125 duration-150 fab fa-discord dark:hover:text-indigo-400 hover:text-indigo-600' />
           </a>
@@ -57,7 +69,7 @@ const SocialButton = () => {
           <a
             target='_blank'
             rel='noreferrer'
-            title={'steam'}
+            title={'Steam'}
             href={CONTACT_STEAM}>
             <i className='transform hover:scale-125 duration-150 fab fa-steam dark:hover:text-indigo-400 hover:text-indigo-600' />
           </a>
@@ -66,7 +78,7 @@ const SocialButton = () => {
           <a
             target='_blank'
             rel='noreferrer'
-            title={'xbox'}
+            title={'Xbox'}
             href={CONTACT_XBOX}>
             <i className='transform hover:scale-125 duration-150 fab fa-xbox dark:hover:text-indigo-400 hover:text-indigo-600' />
           </a>
@@ -179,14 +191,9 @@ const SocialButton = () => {
           <a
             target='_blank'
             rel='noreferrer'
-            title={'任天堂'}
+            title={'Nintendo'}
             href={CONTACT_NINTENDO}>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              className='transform hover:scale-125 duration-150 w-6'
-              src='/svg/ns.svg'
-              alt='任天堂'
-            />
+            {renderMaskIcon('/svg/ns.svg')}
           </a>
         )}
         {CONTACT_EPICGAMES && (
@@ -195,12 +202,7 @@ const SocialButton = () => {
             rel='noreferrer'
             title={'EpicGames'}
             href={CONTACT_EPICGAMES}>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              className='transform hover:scale-125 duration-150 w-6'
-              src='/svg/epicgames.svg'
-              alt='EpicGames'
-            />
+            {renderMaskIcon('/svg/epicgames.svg')}
           </a>
         )}
         {CONTACT_ZHISHIXINGQIU && (
