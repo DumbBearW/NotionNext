@@ -9,7 +9,7 @@ import { handleEmailClick } from '@/lib/plugins/mailEncrypt'
  * @constructor
  */
 const SocialButton = () => {
-  const CONTACT_DISCORG = siteConfig('CONTACT_DISCORD')
+  const CONTACT_DISCORD = siteConfig('CONTACT_DISCORD')
   const CONTACT_GITHUB = siteConfig('CONTACT_GITHUB')
   const CONTACT_TWITTER = siteConfig('CONTACT_TWITTER')
   const CONTACT_TELEGRAM = siteConfig('CONTACT_TELEGRAM')
