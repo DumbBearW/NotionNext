@@ -40,11 +40,12 @@ const SocialButton = () => {
   }
 
   const emailIcon = useRef(null)
-  const gameLinkClass = 'inline-flex h-6 w-6 items-center justify-center leading-none'
+  const gameLinkClass =
+    'inline-flex h-6 w-6 shrink-0 items-center justify-center leading-none'
   const gameFaIconClass =
-    'text-[1.42rem] leading-none transform hover:scale-125 duration-150 dark:hover:text-indigo-400 hover:text-indigo-600'
+    'text-[1.45rem] leading-none transform hover:scale-125 duration-150 dark:hover:text-indigo-400 hover:text-indigo-600'
 
-  const renderMaskIcon = (src, iconClass = 'h-[1.35rem] w-[1.35rem]') => (
+  const renderMaskIcon = (src, iconClass = 'h-[1.45rem] w-[1.45rem]') => (
     <span
       className='inline-flex h-6 w-6 items-center justify-center leading-none transform hover:scale-125 duration-150 dark:hover:text-indigo-400 hover:text-indigo-600'
       aria-hidden='true'
@@ -60,14 +61,14 @@ const SocialButton = () => {
     </span>
   )
 
-  const renderSvgLink = (href, title, iconSrc) => (
+  const renderSvgLink = (href, title, iconSrc, iconClass) => (
     <a
       className={gameLinkClass}
       target='_blank'
       rel='noreferrer'
       title={title}
       href={href}>
-      {renderMaskIcon(iconSrc)}
+      {renderMaskIcon(iconSrc, iconClass)}
     </a>
   )
 
@@ -84,7 +85,7 @@ const SocialButton = () => {
 
   return (
     <div className='w-full justify-center flex-wrap flex'>
-      <div className='space-x-3 text-xl flex items-center text-gray-600 dark:text-gray-300 '>
+      <div className='flex w-full flex-wrap items-center justify-center gap-x-3 gap-y-2 text-xl text-gray-600 dark:text-gray-300'>
         {CONTACT_DISCORD &&
           renderFaLink(CONTACT_DISCORD, 'Discord', 'fab fa-discord')}
         {CONTACT_NINTENDO &&
@@ -199,7 +200,8 @@ const SocialButton = () => {
           renderSvgLink(
             CONTACT_EPICGAMES,
             'EpicGames',
-            '/svg/epicgames-cutout.svg'
+            '/svg/epicgames-cutout.svg',
+            'h-[1.62rem] w-[1.62rem]'
           )}
         {CONTACT_ZHISHIXINGQIU && (
           <a
