@@ -79,15 +79,8 @@ const SocialButton = () => {
             <i className='transform hover:scale-125 duration-150 fab fa-discord dark:hover:text-indigo-400 hover:text-indigo-600' />
           </a>
         )}
-        {CONTACT_STEAM && (
-          <a
-            target='_blank'
-            rel='noreferrer'
-            title={'Steam'}
-            href={CONTACT_STEAM}>
-            <i className='transform hover:scale-125 duration-150 fab fa-steam dark:hover:text-indigo-400 hover:text-indigo-600' />
-          </a>
-        )}
+        {CONTACT_NINTENDO &&
+          renderSvgLink(CONTACT_NINTENDO, 'Nintendo', '/svg/ns.svg')}
         {CONTACT_XBOX && (
           <a
             target='_blank'
@@ -201,8 +194,15 @@ const SocialButton = () => {
             />
           </a>
         )}
-        {CONTACT_NINTENDO &&
-          renderSvgLink(CONTACT_NINTENDO, 'Nintendo', '/svg/ns.svg')}
+        {CONTACT_STEAM && (
+          <a
+            target='_blank'
+            rel='noreferrer'
+            title={'Steam'}
+            href={CONTACT_STEAM}>
+            <i className='transform hover:scale-125 duration-150 fab fa-steam dark:hover:text-indigo-400 hover:text-indigo-600' />
+          </a>
+        )}
         {CONTACT_EPICGAMES &&
           renderSvgLink(
             CONTACT_EPICGAMES,
