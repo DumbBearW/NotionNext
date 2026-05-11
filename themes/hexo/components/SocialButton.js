@@ -67,22 +67,6 @@ const SocialButton = () => {
     </a>
   )
 
-  const renderImageLink = (href, title, iconSrc, alt) => (
-    <a
-      className='inline-flex h-[1em] w-[1em] items-center justify-center leading-none'
-      target='_blank'
-      rel='noreferrer'
-      title={title}
-      href={href}>
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
-        className='block h-[1em] w-[1em] object-contain align-middle transform hover:scale-125 duration-150'
-        src={iconSrc}
-        alt={alt}
-      />
-    </a>
-  )
-
   return (
     <div className='w-full justify-center flex-wrap flex'>
       <div className='space-x-3 text-xl flex items-center text-gray-600 dark:text-gray-300 '>
@@ -220,11 +204,10 @@ const SocialButton = () => {
         {CONTACT_NINTENDO &&
           renderSvgLink(CONTACT_NINTENDO, 'Nintendo', '/svg/ns.svg')}
         {CONTACT_EPICGAMES &&
-          renderImageLink(
+          renderSvgLink(
             CONTACT_EPICGAMES,
             'EpicGames',
-            '/svg/epicgames.svg',
-            'EpicGames'
+            '/svg/epicgames-cutout.svg'
           )}
         {CONTACT_ZHISHIXINGQIU && (
           <a
