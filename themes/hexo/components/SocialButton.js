@@ -40,13 +40,17 @@ const SocialButton = () => {
   }
 
   const emailIcon = useRef(null)
-  const renderMaskIcon = src => (
+  const gameLinkClass = 'inline-flex h-6 w-6 items-center justify-center leading-none'
+  const gameFaIconClass =
+    'text-[1.42rem] leading-none transform hover:scale-125 duration-150 dark:hover:text-indigo-400 hover:text-indigo-600'
+
+  const renderMaskIcon = (src, iconClass = 'h-[1.35rem] w-[1.35rem]') => (
     <span
-      className='inline-flex h-[1em] w-[1em] items-center justify-center align-[-0.125em] leading-none transform hover:scale-125 duration-150 dark:hover:text-indigo-400 hover:text-indigo-600'
+      className='inline-flex h-6 w-6 items-center justify-center leading-none transform hover:scale-125 duration-150 dark:hover:text-indigo-400 hover:text-indigo-600'
       aria-hidden='true'
     >
       <span
-        className='block h-[0.95em] w-[0.95em]'
+        className={`block ${iconClass}`}
         style={{
           backgroundColor: 'currentColor',
           WebkitMask: `url("${src}") center / contain no-repeat`,
@@ -58,7 +62,7 @@ const SocialButton = () => {
 
   const renderSvgLink = (href, title, iconSrc) => (
     <a
-      className='inline-flex items-center justify-center leading-none'
+      className={gameLinkClass}
       target='_blank'
       rel='noreferrer'
       title={title}
@@ -67,29 +71,25 @@ const SocialButton = () => {
     </a>
   )
 
+  const renderFaLink = (href, title, iconClass) => (
+    <a
+      className={gameLinkClass}
+      target='_blank'
+      rel='noreferrer'
+      title={title}
+      href={href}>
+      <i className={`${gameFaIconClass} ${iconClass}`} />
+    </a>
+  )
+
   return (
     <div className='w-full justify-center flex-wrap flex'>
       <div className='space-x-3 text-xl flex items-center text-gray-600 dark:text-gray-300 '>
-        {CONTACT_DISCORD && (
-          <a
-            target='_blank'
-            rel='noreferrer'
-            title={'Discord'}
-            href={CONTACT_DISCORD}>
-            <i className='transform hover:scale-125 duration-150 fab fa-discord dark:hover:text-indigo-400 hover:text-indigo-600' />
-          </a>
-        )}
+        {CONTACT_DISCORD &&
+          renderFaLink(CONTACT_DISCORD, 'Discord', 'fab fa-discord')}
         {CONTACT_NINTENDO &&
           renderSvgLink(CONTACT_NINTENDO, 'Nintendo', '/svg/ns.svg')}
-        {CONTACT_XBOX && (
-          <a
-            target='_blank'
-            rel='noreferrer'
-            title={'Xbox'}
-            href={CONTACT_XBOX}>
-            <i className='transform hover:scale-125 duration-150 fab fa-xbox dark:hover:text-indigo-400 hover:text-indigo-600' />
-          </a>
-        )}
+        {CONTACT_XBOX && renderFaLink(CONTACT_XBOX, 'Xbox', 'fab fa-xbox')}
         {CONTACT_GITHUB && (
           <a
             target='_blank'
@@ -194,15 +194,7 @@ const SocialButton = () => {
             />
           </a>
         )}
-        {CONTACT_STEAM && (
-          <a
-            target='_blank'
-            rel='noreferrer'
-            title={'Steam'}
-            href={CONTACT_STEAM}>
-            <i className='transform hover:scale-125 duration-150 fab fa-steam dark:hover:text-indigo-400 hover:text-indigo-600' />
-          </a>
-        )}
+        {CONTACT_STEAM && renderFaLink(CONTACT_STEAM, 'Steam', 'fab fa-steam')}
         {CONTACT_EPICGAMES &&
           renderSvgLink(
             CONTACT_EPICGAMES,
