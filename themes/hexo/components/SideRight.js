@@ -8,12 +8,14 @@ import Announcement from './Announcement'
 import Card from './Card'
 import Catalog from './Catalog'
 import CategoryGroup from './CategoryGroup'
-import CustomSidebarCard from './CustomSidebarCard'
 import { InfoCard } from './InfoCard'
 import LatestPostsGroup from './LatestPostsGroup'
 import TagGroups from './TagGroups'
 
 const HexoRecentComments = dynamic(() => import('./HexoRecentComments'))
+const CustomSidebarCard = dynamic(() => import('./CustomSidebarCard'), {
+  ssr: false
+})
 const FaceBookPage = dynamic(
   () => {
     let facebook = <></>

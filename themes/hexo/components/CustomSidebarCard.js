@@ -1,7 +1,22 @@
 import { siteConfig } from '@/lib/config'
-import Script from 'next/script'
 import CONFIG from '../config'
 import Card from './Card'
+
+const escapeHtmlAttr = value =>
+  String(value || '')
+    .replace(/&/g, '&amp;')
+    .replace(/"/g, '&quot;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+
+const getUrlParam = (url, key) => {
+  if (!url) return ''
+  try {
+    return new URL(url, 'https://notionnext.local').searchParams.get(key) || ''
+  } catch {
+    return ''
+  }
+}
 
 const CustomSidebarCard = () => {
   const title = siteConfig('HEXO_WIDGET_CUSTOM_CARD_TITLE', '', CONFIG)
@@ -24,13 +39,22 @@ const CustomSidebarCard = () => {
   const scriptUrl = scriptSrc
     ? `${scriptSrc}${scriptSrc.includes('?') ? '&' : '?'}id=${scriptTargetId}`
     : ''
+  const iframeLang = getUrlParam(scriptUrl, 'lang') || siteConfig('LANG', 'zh-CN')
+  const iframeSrcDoc = scriptUrl
+    ? `<!doctype html><html lang="${escapeHtmlAttr(iframeLang)}"><head><meta charset="utf-8"><base target="_blank"><style>html,body{margin:0;padding:0;background:transparent;overflow:hidden}body{min-height:58px;display:flex;align-items:center}#${scriptTargetId}{width:100%}.kao-banner{border-radius:8px}</style></head><body><div id="${scriptTargetId}"></div><script src="${escapeHtmlAttr(scriptUrl)}"><\/script></body></html>`
+    : ''
 
   if (!title && lines.length === 0 && !scriptSrc && !link) {
     return null
   }
 
   return (
-    <Card>
+    <Card className='hexo-custom-sidebar-card'>
+      <style jsx global>{`
+        .hexo-custom-sidebar-card .card {
+          padding: 16px 18px !important;
+        }
+      `}</style>
       {title && <div className='mb-3 font-medium'>{title}</div>}
       {lines.length > 0 && (
         <div className='space-y-2 text-sm leading-6 text-gray-600 dark:text-gray-300'>
@@ -40,10 +64,14 @@ const CustomSidebarCard = () => {
         </div>
       )}
       {scriptSrc && (
-        <>
-          <div id={scriptTargetId} />
-          <Script id={`${scriptTargetId}-loader`} src={scriptUrl} strategy='afterInteractive' />
-        </>
+        <iframe
+          className='block w-full border-0'
+          loading='lazy'
+          sandbox='allow-scripts allow-popups allow-popups-to-escape-sandbox'
+          srcDoc={iframeSrcDoc}
+          style={{ height: '58px' }}
+          title='Keep Android Open banner'
+        />
       )}
       {link && (
         <a

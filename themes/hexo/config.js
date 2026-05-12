@@ -38,7 +38,7 @@ const CONFIG = {
   HEXO_WIDGET_LATEST_POSTS: true, // 显示最新文章卡
   HEXO_WIDGET_CUSTOM_CARD_TITLE: '', // 侧栏自定义卡片标题；留空则不显示标题
   HEXO_WIDGET_CUSTOM_CARD_CONTENT: '', // 侧栏自定义卡片内容；支持字符串或字符串数组，留空则隐藏卡片
-  HEXO_WIDGET_CUSTOM_CARD_SCRIPT_SRC: 'https://keepandroidopen.org/banner.js?animation=off&size=mini&hidebutton=off', // 侧栏自定义卡片脚本地址；脚本需支持按 id 插入
+  HEXO_WIDGET_CUSTOM_CARD_SCRIPT_SRC: 'https://keepandroidopen.org/banner.js?lang=zh-CN&animation=off&size=mini&hidebutton=off', // 侧栏自定义卡片脚本地址；脚本需支持按 id 插入
   HEXO_WIDGET_CUSTOM_CARD_LINK: '', // 侧栏自定义卡片链接；留空则不显示按钮
   HEXO_WIDGET_CUSTOM_CARD_LINK_TEXT: '查看详情', // 侧栏自定义卡片链接文字
   HEXO_WIDGET_ANALYTICS: false, // 显示统计卡
