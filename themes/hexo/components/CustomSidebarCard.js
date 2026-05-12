@@ -1,4 +1,5 @@
 import { siteConfig } from '@/lib/config'
+import { useEffect, useState } from 'react'
 import CONFIG from '../config'
 import Card from './Card'
 
@@ -18,6 +19,29 @@ const getUrlParam = (url, key) => {
   }
 }
 
+const getKeepAndroidOpenLink = (url, lang) => {
+  if (!url) return ''
+  try {
+    const parsed = new URL(url, 'https://notionnext.local')
+    if (parsed.hostname !== 'keepandroidopen.org') return ''
+
+    const linkParam = parsed.searchParams.get('link')
+    if (linkParam === 'none') return ''
+    if (linkParam) return linkParam
+
+    const locale = lang || parsed.searchParams.get('lang') || 'en'
+    return `https://keepandroidopen.org${locale === 'en' ? '' : `/${locale}/`}`
+  } catch {
+    return ''
+  }
+}
+
+const isInAppBrowser = () => {
+  if (typeof navigator === 'undefined') return false
+  const ua = navigator.userAgent || ''
+  return /MicroMessenger|WeChat|Instagram|Threads|FBAN|FBAV|Line\/|Weibo|QQ\/|QQBrowser|Twitter|Bluesky|Telegram|Discord|Heybox|XiaoHeiHe|XiaoHongShu|NewsArticle/i.test(ua)
+}
+
 const CustomSidebarCard = () => {
   const title = siteConfig('HEXO_WIDGET_CUSTOM_CARD_TITLE', '', CONFIG)
   const content = siteConfig('HEXO_WIDGET_CUSTOM_CARD_CONTENT', '', CONFIG)
@@ -28,6 +52,11 @@ const CustomSidebarCard = () => {
     '查看详情',
     CONFIG
   )
+  const [needsIframeClickProxy, setNeedsIframeClickProxy] = useState(false)
+
+  useEffect(() => {
+    setNeedsIframeClickProxy(isInAppBrowser())
+  }, [])
 
   const lines = Array.isArray(content)
     ? content.filter(Boolean)
@@ -40,6 +69,7 @@ const CustomSidebarCard = () => {
     ? `${scriptSrc}${scriptSrc.includes('?') ? '&' : '?'}id=${scriptTargetId}`
     : ''
   const iframeLang = getUrlParam(scriptUrl, 'lang') || siteConfig('LANG', 'zh-CN')
+  const iframeClickUrl = link || getKeepAndroidOpenLink(scriptUrl, iframeLang)
   const iframeSrcDoc = scriptUrl
     ? `<!doctype html><html lang="${escapeHtmlAttr(iframeLang)}"><head><meta charset="utf-8"><base target="_blank"><style>html,body{margin:0;padding:0;background:transparent;overflow:hidden}body{min-height:58px;display:flex;align-items:center}#${scriptTargetId}{width:100%}.kao-banner{border-radius:8px}</style></head><body><div id="${scriptTargetId}"></div><script src="${escapeHtmlAttr(scriptUrl)}"><\/script></body></html>`
     : ''
@@ -64,14 +94,25 @@ const CustomSidebarCard = () => {
         </div>
       )}
       {scriptSrc && (
-        <iframe
-          className='block w-full border-0'
-          loading='lazy'
-          sandbox='allow-scripts allow-popups allow-popups-to-escape-sandbox'
-          srcDoc={iframeSrcDoc}
-          style={{ height: '58px' }}
-          title='Keep Android Open banner'
-        />
+        <div className='relative'>
+          <iframe
+            className='block w-full border-0'
+            loading='lazy'
+            sandbox='allow-scripts allow-popups allow-popups-to-escape-sandbox'
+            srcDoc={iframeSrcDoc}
+            style={{ height: '58px' }}
+            title='Keep Android Open banner'
+          />
+          {needsIframeClickProxy && iframeClickUrl && (
+            <a
+              aria-label={title || linkText || 'Open banner link'}
+              className='absolute inset-0 z-10 block'
+              href={iframeClickUrl}
+              rel='noreferrer'
+              target='_blank'
+            />
+          )}
+        </div>
       )}
       {link && (
         <a

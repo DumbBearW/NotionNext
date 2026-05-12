@@ -68,6 +68,9 @@ export default function SideRight(props) {
         )}
 
         <InfoCard {...props} />
+
+        <Announcement post={notice} />
+
         {siteConfig('HEXO_WIDGET_ANALYTICS', null, CONFIG) && (
           <AnalyticsCard {...props} />
         )}
@@ -96,8 +99,6 @@ export default function SideRight(props) {
               <LatestPostsGroup {...props} />
             </Card>
           )}
-
-        <Announcement post={notice} />
 
         {siteConfig('COMMENT_WALINE_SERVER_URL') &&
           siteConfig('COMMENT_WALINE_RECENT') && <HexoRecentComments />}
