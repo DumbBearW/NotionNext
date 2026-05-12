@@ -102,7 +102,7 @@ const CustomSidebarCard = () => {
     : ''
   const iframeLang = siteLang
   const iframeClickUrl = link || getKeepAndroidOpenLink(scriptUrl, iframeLang)
-  const iframeTextPatchScript = `(() => { const replace = () => { const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT); const nodes = []; while (walker.nextNode()) nodes.push(walker.currentNode); nodes.forEach(node => { node.nodeValue = node.nodeValue.replace(/安卓将成为一个封闭平台/g, 'Android 将成为一个封闭平台'); }); }; replace(); new MutationObserver(replace).observe(document.body, { childList: true, subtree: true, characterData: true }); })();`
+  const iframeTextPatchScript = `(() => { let scheduled = false; const replace = () => { scheduled = false; const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT); const nodes = []; while (walker.nextNode()) nodes.push(walker.currentNode); nodes.forEach(node => { const next = node.nodeValue.replace(/安卓将成为一个封闭平台/g, 'Android 将成为一个封闭平台'); if (next !== node.nodeValue) node.nodeValue = next; }); }; const schedule = () => { if (scheduled) return; scheduled = true; requestAnimationFrame(replace); }; schedule(); new MutationObserver(schedule).observe(document.body, { childList: true, subtree: true, characterData: true }); })();`
   const iframeSrcDoc = scriptUrl
     ? `<!doctype html><html lang="${escapeHtmlAttr(iframeLang)}"><head><meta charset="utf-8"><base target="_blank"><style>html,body{margin:0;padding:0;background:transparent;overflow:hidden}body{min-height:58px;display:flex;align-items:center}#${scriptTargetId}{width:100%}#${scriptTargetId},#${scriptTargetId} *{text-transform:none!important}.kao-banner{border-radius:8px}</style></head><body><div id="${scriptTargetId}"></div><script src="${escapeHtmlAttr(scriptUrl)}"><\/script><script>${iframeTextPatchScript}<\/script></body></html>`
     : ''
@@ -129,8 +129,9 @@ const CustomSidebarCard = () => {
       {scriptSrc && (
         <div className='relative'>
           <iframe
+            key={scriptUrl}
             className='block w-full border-0'
-            loading='lazy'
+            loading='eager'
             sandbox='allow-scripts allow-popups allow-popups-to-escape-sandbox'
             srcDoc={iframeSrcDoc}
             style={{ height: '58px' }}
