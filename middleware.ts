@@ -1,94 +1,86 @@
-import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server'
 import { NextRequest, NextResponse } from 'next/server'
 import { checkStrIsNotionId, getLastPartOfUrl } from '@/lib/utils'
 import { idToUuid } from 'notion-utils'
 import BLOG from './blog.config'
 
-/**
- * Clerk 身份验证中间件
- */
 export const config = {
-  // 这里设置白名单，防止静态资源被拦截
-  matcher: ['/((?!.*\\..*|_next|/sign-in|/auth).*)', '/', '/(api|trpc)(.*)']
+  matcher: [
+    '/((?!.*\\..*|_next).*)',
+    '/',
+    '/(api|trpc)(.*)',
+    '/music/:path*',
+    '/images/:path*',
+    '/subs/:path*'
+  ]
 }
 
-// 限制登录访问的路由
-const isTenantRoute = createRouteMatcher([
-  '/user/organization-selector(.*)',
-  '/user/orgid/(.*)',
-  '/dashboard',
-  '/dashboard/(.*)'
-])
-
-// 限制权限访问的路由
-const isTenantAdminRoute = createRouteMatcher([
-  '/admin/(.*)/memberships',
-  '/admin/(.*)/domain'
-])
-
 /**
- * 没有配置权限相关功能的返回
- * @param req
- * @param ev
- * @returns
+ * 防盗链（优化版）
+ * - 只拦外站 referer
+ * - 不拦空 referer（避免误伤播放器 / fetch / track）
+ * - 只作用于指定目录 + 文件类型
  */
-// eslint-disable-next-line @typescript-eslint/require-await, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-vars
-const noAuthMiddleware = async (req: NextRequest, ev: any) => {
-  // 如果没有配置 Clerk 相关环境变量，返回一个默认响应或者继续处理请求
+function mediaHotlinkProtection(req: NextRequest) {
+  const pathname = req.nextUrl.pathname
+
+  // 统一目录判断
+  const isMediaDir = /^\/(music|images|subs)\//.test(pathname)
+
+  // 文件类型过滤
+  const isMediaFile =
+    /\.(m4a|lrc|avif|jpg|webp|webm|mp4|ogg|srt|vtt|ttml)$/i.test(pathname)
+
+  if (!isMediaDir || !isMediaFile) return null
+
+  const referer = req.headers.get('referer')
+  const host = req.headers.get('host')
+
+  // 只拦“明确外站引用”
+  const isExternalHotlink =
+    referer &&
+    host &&
+    !referer.includes(host)
+
+  if (isExternalHotlink) {
+    return new NextResponse('Hotlinking not allowed', {
+      status: 403,
+      headers: {
+        'Content-Type': 'text/plain'
+      }
+    })
+  }
+
+  return null
+}
+
+export default async function middleware(req: NextRequest) {
+  const hotlinkResponse = mediaHotlinkProtection(req)
+  if (hotlinkResponse) return hotlinkResponse
+
   if (BLOG['UUID_REDIRECT']) {
     let redirectJson: Record<string, string> = {}
+
     try {
       const response = await fetch(`${req.nextUrl.origin}/redirect.json`)
       if (response.ok) {
-        redirectJson = (await response.json()) as Record<string, string>
+        redirectJson = await response.json()
       }
     } catch (err) {
-      console.error('Error fetching static file:', err)
+      console.error('Error fetching redirect.json:', err)
     }
-    let lastPart = getLastPartOfUrl(req.nextUrl.pathname) as string
+
+    let lastPart = getLastPartOfUrl(req.nextUrl.pathname)
+
     if (checkStrIsNotionId(lastPart)) {
       lastPart = idToUuid(lastPart)
     }
+
     if (lastPart && redirectJson[lastPart]) {
       const redirectToUrl = req.nextUrl.clone()
       redirectToUrl.pathname = '/' + redirectJson[lastPart]
-      console.log(
-        `redirect from ${req.nextUrl.pathname} to ${redirectToUrl.pathname}`
-      )
       return NextResponse.redirect(redirectToUrl, 308)
     }
   }
+
   return NextResponse.next()
 }
-/**
- * 鉴权中间件
- */
-const authMiddleware = process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY
-  ? clerkMiddleware((auth, req) => {
-      const { userId } = auth()
-      // 处理 /dashboard 路由的登录保护
-      if (isTenantRoute(req)) {
-        if (!userId) {
-          // 用户未登录，重定向到 /sign-in
-          const url = new URL('/sign-in', req.url)
-          url.searchParams.set('redirectTo', req.url) // 保存重定向目标
-          return NextResponse.redirect(url)
-        }
-      }
-
-      // 处理管理员相关权限保护
-      if (isTenantAdminRoute(req)) {
-        auth().protect(has => {
-          return (
-            has({ permission: 'org:sys_memberships:manage' }) ||
-            has({ permission: 'org:sys_domains_manage' })
-          )
-        })
-      }
-
-      // 默认继续处理请求
-      return NextResponse.next()
-    })
-  : noAuthMiddleware
-
-export default authMiddleware

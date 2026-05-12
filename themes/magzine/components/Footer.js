@@ -1,6 +1,4 @@
 import AnalyticsBusuanzi from '@/components/AnalyticsBusuanzi'
-import { BeiAnGongAn } from '@/components/BeiAnGongAn'
-import BeiAnSite from '@/components/BeiAnSite'
 import CopyRightDate from '@/components/CopyRightDate'
 import DarkModeButton from '@/components/DarkModeButton'
 import LazyImage from '@/components/LazyImage'
@@ -88,8 +86,6 @@ const Footer = ({ title }) => {
 
         {/* 备案 */}
         <div className='w-full text-center flex flex-wrap items-center justify-center gap-x-2'>
-          <BeiAnSite />
-          <BeiAnGongAn />
         </div>
       </div>
     </footer>

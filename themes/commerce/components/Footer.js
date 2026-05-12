@@ -1,5 +1,3 @@
-import { BeiAnGongAn } from '@/components/BeiAnGongAn'
-import BeiAnSite from '@/components/BeiAnSite'
 import CopyRightDate from '@/components/CopyRightDate'
 import { siteConfig } from '@/lib/config'
 import SmartLink from '@/components/SmartLink'
@@ -232,8 +230,6 @@ const Footer = props => {
             <h2> {siteConfig('DESCRIPTION')}</h2>
             {/* 可选备案信息 */}
             <div className='flex flex-wrap'>
-              <BeiAnSite />
-              <BeiAnGongAn />
             </div>
           </div>
         </div>

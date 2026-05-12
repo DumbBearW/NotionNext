@@ -1,4 +1,3 @@
-import { BeiAnGongAn } from '@/components/BeiAnGongAn'
 import DarkModeButton from '@/components/DarkModeButton'
 import { siteConfig } from '@/lib/config'
 /**
@@ -25,14 +24,6 @@ export const Footer = props => {
         <div className='md:p-0 text-center md:text-right text-xs'>
           {/* 右侧链接 */}
           {/* <a href="#" className="text-black no-underline hover:underline">Privacy Policy</a> */}
-          {siteConfig('BEI_AN') && (
-            <a
-              href={siteConfig('BEI_AN_LINK')}
-              className='text-black dark:text-gray-200 no-underline hover:underline ml-4'>
-              {siteConfig('BEI_AN')}
-            </a>
-          )}
-          <BeiAnGongAn />
           <span className='dark:text-gray-200 no-underline ml-4'>
             Powered by
             <a

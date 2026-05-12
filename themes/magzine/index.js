@@ -6,12 +6,9 @@ import replaceSearchResult from '@/components/Mark'
 import NotionPage from '@/components/NotionPage'
 import ShareBar from '@/components/ShareBar'
 import WWAds from '@/components/WWAds'
-import DashboardBody from '@/components/ui/dashboard/DashboardBody'
-import DashboardHeader from '@/components/ui/dashboard/DashboardHeader'
 import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
 import { isBrowser } from '@/lib/utils'
-import { SignIn, SignUp } from '@clerk/nextjs'
 import SmartLink from '@/components/SmartLink'
 import { useRouter } from 'next/router'
 import { createContext, useContext, useEffect, useRef, useState } from 'react'
@@ -488,17 +485,10 @@ const LayoutTagIndex = props => {
  */
 const LayoutSignIn = props => {
   const { post } = props
-  const enableClerk = process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY
 
   return (
     <>
       <div className='grow mt-20'>
-        {/* clerk预置表单 */}
-        {enableClerk && (
-          <div className='flex justify-center py-6'>
-            <SignIn />
-          </div>
-        )}
         <div id='article-wrapper'>
           <NotionPage post={post} />
         </div>
@@ -514,17 +504,10 @@ const LayoutSignIn = props => {
  */
 const LayoutSignUp = props => {
   const { post } = props
-  const enableClerk = process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY
 
   return (
     <>
       <div className='grow mt-20'>
-        {/* clerk预置表单 */}
-        {enableClerk && (
-          <div className='flex justify-center py-6'>
-            <SignUp />
-          </div>
-        )}
         <div id='article-wrapper'>
           <NotionPage post={post} />
         </div>
@@ -533,39 +516,11 @@ const LayoutSignUp = props => {
   )
 }
 
-/**
- * 仪表盘
- * @param {*} props
- * @returns
- */
-const LayoutDashboard = props => {
-  const { post } = props
-
-  return (
-    <>
-      <div className='container grow'>
-        <div className='flex flex-wrap justify-center -mx-4'>
-          <div id='container-inner' className='w-full p-4'>
-            {post && (
-              <div id='article-wrapper' className='mx-auto'>
-                <NotionPage {...props} />
-              </div>
-            )}
-          </div>
-        </div>
-      </div>
-      {/* 仪表盘 */}
-      <DashboardHeader />
-      <DashboardBody />
-    </>
-  )
-}
 export {
   Layout404,
   LayoutArchive,
   LayoutBase,
   LayoutCategoryIndex,
-  LayoutDashboard,
   LayoutIndex,
   LayoutPostList,
   LayoutSearch,

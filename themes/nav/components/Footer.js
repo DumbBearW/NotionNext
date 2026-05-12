@@ -1,4 +1,3 @@
-import { BeiAnGongAn } from '@/components/BeiAnGongAn'
 import { siteConfig } from '@/lib/config'
 
 const Footer = ({ siteInfo }) => {
@@ -33,17 +32,6 @@ const Footer = ({ siteInfo }) => {
           NotionNext {siteConfig('VERSION')}
         </a>
       </div>
-
-      {siteConfig('BEI_AN') && (
-        <>
-          <i className='fas fa-shield-alt' />{' '}
-          <a href={siteConfig('BEI_AN_LINK')} className='mr-2'>
-            {siteConfig('BEI_AN')}
-          </a>
-          <br />
-        </>
-      )}
-      <BeiAnGongAn />
 
       <span className='hidden busuanzi_container_site_pv'>
         <i className='text-xs fas fa-eye' />

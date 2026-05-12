@@ -1,5 +1,4 @@
 import Comment from '@/components/Comment'
-import Live2D from '@/components/Live2D'
 import replaceSearchResult from '@/components/Mark'
 import NotionPage from '@/components/NotionPage'
 import ShareBar from '@/components/ShareBar'
@@ -131,7 +130,6 @@ const LayoutBase = props => {
                   </div>
                 </Tabs>
                 <Announcement post={notice} />
-                <Live2D />
               </div>
             </div>
           )}

@@ -8,7 +8,6 @@
 
 import Comment from '@/components/Comment'
 import { AdSlot } from '@/components/GoogleAdsense'
-import Live2D from '@/components/Live2D'
 import NotionIcon from '@/components/NotionIcon'
 import NotionPage from '@/components/NotionPage'
 import { siteConfig } from '@/lib/config'
@@ -140,7 +139,6 @@ const LayoutBase = props => {
 
             {/* 页脚站点信息 */}
             <div className='w-56 fixed left-0 bottom-0 z-0'>
-              <Live2D />
               <Footer {...props} />
             </div>
           </div>

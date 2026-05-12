@@ -26,11 +26,8 @@ import { Style } from './style'
 import Comment from '@/components/Comment'
 import replaceSearchResult from '@/components/Mark'
 import ShareBar from '@/components/ShareBar'
-import DashboardBody from '@/components/ui/dashboard/DashboardBody'
-import DashboardHeader from '@/components/ui/dashboard/DashboardHeader'
 import { useGlobal } from '@/lib/global'
 import { loadWowJS } from '@/lib/plugins/wow'
-import { SignIn, SignUp } from '@clerk/nextjs'
 import SmartLink from '@/components/SmartLink'
 import { ArticleLock } from './components/ArticleLock'
 import { Banner } from './components/Banner'
@@ -196,34 +193,6 @@ const LayoutSlug = props => {
                     </div>
                 </div>
             </div>
-        </>
-    )
-}
-
-/**
- * 仪表盘
- * @param {*} props
- * @returns
- */
-const LayoutDashboard = props => {
-    const { post } = props
-
-    return (
-        <>
-            <div className='container grow'>
-                <div className='flex flex-wrap justify-center -mx-4'>
-                    <div id='container-inner' className='w-full p-4'>
-                        {post && (
-                            <div id='article-wrapper' className='mx-auto'>
-                                <NotionPage {...props} />
-                            </div>
-                        )}
-                    </div>
-                </div>
-            </div>
-            {/* 仪表盘 */}
-            <DashboardHeader />
-            <DashboardBody />
         </>
     )
 }
@@ -482,7 +451,6 @@ const LayoutTagIndex = props => {
  * @returns
  */
 const LayoutSignIn = props => {
-    const enableClerk = process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY
     const title = siteConfig('PROXIO_SIGNIN', '登录')
     const description = siteConfig(
         'PROXIO_SIGNIN_DESCRITION',
@@ -492,15 +460,7 @@ const LayoutSignIn = props => {
         <>
             <div className='grow mt-20'>
                 <Banner title={title} description={description} />
-                {/* clerk预置表单 */}
-                {enableClerk && (
-                    <div className='flex justify-center py-6'>
-                        <SignIn />
-                    </div>
-                )}
-
-                {/* 自定义登录表单 */}
-                {!enableClerk && <SignInForm />}
+                <SignInForm />
             </div>
         </>
     )
@@ -512,8 +472,6 @@ const LayoutSignIn = props => {
  * @returns
  */
 const LayoutSignUp = props => {
-    const enableClerk = process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY
-
     const title = siteConfig('PROXIO_SIGNIN', '注册')
     const description = siteConfig(
         'PROXIO_SIGNIN_DESCRITION',
@@ -523,16 +481,7 @@ const LayoutSignUp = props => {
         <>
             <div className='grow mt-20'>
                 <Banner title={title} description={description} />
-
-                {/* clerk预置表单 */}
-                {enableClerk && (
-                    <div className='flex justify-center py-6'>
-                        <SignUp />
-                    </div>
-                )}
-
-                {/* 自定义登录表单 */}
-                {!enableClerk && <SignUpForm />}
+                <SignUpForm />
             </div>
         </>
     )
@@ -543,7 +492,6 @@ export {
     LayoutArchive,
     LayoutBase,
     LayoutCategoryIndex,
-    LayoutDashboard,
     LayoutIndex,
     LayoutPostList,
     LayoutSearch,

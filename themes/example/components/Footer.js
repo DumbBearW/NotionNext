@@ -1,5 +1,3 @@
-import { BeiAnGongAn } from '@/components/BeiAnGongAn'
-import BeiAnSite from '@/components/BeiAnSite'
 import CopyRightDate from '@/components/CopyRightDate'
 import DarkModeButton from '@/components/DarkModeButton'
 import PoweredBy from '@/components/PoweredBy'
@@ -16,8 +14,6 @@ export const Footer = props => {
           {/* <a href="#" className="text-black no-underline hover:underline">Privacy Policy</a> */}
           <div className='flex flex-wrap'>
             {' '}
-            <BeiAnSite />
-            <BeiAnGongAn />
           </div>
           <PoweredBy />
         </div>

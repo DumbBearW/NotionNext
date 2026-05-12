@@ -8,7 +8,6 @@ import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
 import { isBrowser } from '@/lib/utils'
 import { Transition } from '@headlessui/react'
-import dynamic from 'next/dynamic'
 import SmartLink from '@/components/SmartLink'
 import { useRouter } from 'next/router'
 import { createContext, useContext, useEffect, useRef } from 'react'
@@ -23,7 +22,6 @@ import TagItemMini from './components/TagItemMini'
 import CONFIG from './config'
 import { Style } from './style'
 
-const Live2D = dynamic(() => import('@/components/Live2D'))
 
 // 主题全局状态
 const ThemeGlobalFukasawa = createContext()
@@ -45,7 +43,6 @@ export const useFukasawaGlobal = () => useContext(ThemeGlobalFukasawa)
  */
 const LayoutBase = props => {
   const { children, headerSlot } = props
-  const leftAreaSlot = <Live2D />
   const { onLoading, fullWidth } = useGlobal()
   const searchModal = useRef(null)
   return (
@@ -64,7 +61,7 @@ const LayoutBase = props => {
               : '') + ' flex'
           }>
           {/* 侧边抽屉 */}
-          <AsideLeft {...props} slot={leftAreaSlot} />
+          <AsideLeft {...props} />
 
           <main
             id='wrapper'

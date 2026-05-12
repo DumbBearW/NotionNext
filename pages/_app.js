@@ -10,19 +10,13 @@ import useAdjustStyle from '@/hooks/useAdjustStyle'
 import { GlobalContextProvider } from '@/lib/global'
 import { getBaseLayoutByTheme } from '@/themes/theme'
 import { useRouter } from 'next/router'
-import { useCallback, useEffect, useMemo } from 'react'
+import { useCallback, useMemo } from 'react'
 import { getQueryParam } from '../lib/utils'
 
 // 各种扩展插件 这个要阻塞引入
 import BLOG from '@/blog.config'
 import ExternalPlugins from '@/components/ExternalPlugins'
 import SEO from '@/components/SEO'
-import { zhCN } from '@clerk/localizations'
-import dynamic from 'next/dynamic'
-// import { ClerkProvider } from '@clerk/nextjs'
-const ClerkProvider = dynamic(() =>
-  import('@clerk/nextjs').then(m => m.ClerkProvider)
-)
 
 /**
  * App挂载DOM 入口文件
@@ -41,29 +35,6 @@ const MyApp = ({ Component, pageProps }) => {
     return queryTheme || notionTheme || configTheme
   }, [queryTheme, notionTheme, configTheme])
 
-  useEffect(() => {
-    const source = queryTheme
-      ? 'url:theme'
-      : notionTheme
-        ? 'notion:config'
-        : 'blog/env:config'
-    console.log(
-      '[ThemeResolver][runtime-final]',
-      JSON.stringify(
-        {
-          note: 'This is the final theme used for rendering.',
-          configTheme,
-          notionTheme: notionTheme || null,
-          queryTheme: queryTheme || null,
-          finalTheme: theme,
-          source
-        },
-        null,
-        2
-      )
-    )
-  }, [configTheme, notionTheme, queryTheme, theme])
-
   // 整体布局
   const GLayout = useCallback(
     props => {
@@ -73,8 +44,7 @@ const MyApp = ({ Component, pageProps }) => {
     [theme]
   )
 
-  const enableClerk = process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY
-  const content = (
+  return (
     <GlobalContextProvider {...pageProps}>
       <GLayout {...pageProps}>
         <SEO {...pageProps} />
@@ -82,15 +52,6 @@ const MyApp = ({ Component, pageProps }) => {
       </GLayout>
       <ExternalPlugins {...pageProps} />
     </GlobalContextProvider>
-  )
-  return (
-    <>
-      {enableClerk ? (
-        <ClerkProvider localization={zhCN}>{content}</ClerkProvider>
-      ) : (
-        content
-      )}
-    </>
   )
 }
 

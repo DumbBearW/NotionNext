@@ -42,7 +42,6 @@ import SearchNav from './components/SearchNav'
 import SideRight from './components/SideRight'
 import CONFIG from './config'
 import { Style } from './style'
-import AISummary from '@/components/AISummary'
 import ArticleExpirationNotice from '@/components/ArticleExpirationNotice'
 
 /**
@@ -309,7 +308,6 @@ const LayoutSlug = props => {
                 className='wow fadeInUp p-5 justify-center mx-auto'
                 data-wow-delay='.2s'>
                 <ArticleExpirationNotice post={post} />
-                <AISummary aiSummary={post.aiSummary} />
                 <WWAds orientation='horizontal' className='w-full' />
                 {post && <NotionPage post={post} />}
                 <WWAds orientation='horizontal' className='w-full' />

@@ -1,4 +1,3 @@
-import Live2D from '@/components/Live2D'
 import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
 import dynamic from 'next/dynamic'
@@ -16,18 +15,6 @@ const HexoRecentComments = dynamic(() => import('./HexoRecentComments'))
 const CustomSidebarCard = dynamic(() => import('./CustomSidebarCard'), {
   ssr: false
 })
-const FaceBookPage = dynamic(
-  () => {
-    let facebook = <></>
-    try {
-      facebook = import('@/components/FacebookPage')
-    } catch (err) {
-      console.error(err)
-    }
-    return facebook
-  },
-  { ssr: false }
-)
 
 /**
  * Hexo主题右侧栏
@@ -59,7 +46,7 @@ export default function SideRight(props) {
   return (
     <div
       id='sideRight'
-      className={` lg:w-80 lg:pt-8 ${post ? 'lg:pt-0' : 'lg:pt-4'}`}>
+      className={`mt-4 lg:mt-0 lg:w-80 lg:pt-8 ${post ? 'lg:pt-0' : 'lg:pt-4'}`}>
       <div className='sticky top-8 space-y-4'>
         {post && post.toc && post.toc.length > 1 && (
           <Card>
@@ -104,8 +91,6 @@ export default function SideRight(props) {
           siteConfig('COMMENT_WALINE_RECENT') && <HexoRecentComments />}
 
         {rightAreaSlot}
-        <FaceBookPage />
-        <Live2D />
       </div>
     </div>
   )

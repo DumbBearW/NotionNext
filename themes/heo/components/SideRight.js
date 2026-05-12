@@ -1,5 +1,3 @@
-import Live2D from '@/components/Live2D'
-import dynamic from 'next/dynamic'
 import { AnalyticsCard } from './AnalyticsCard'
 import Card from './Card'
 import Catalog from './Catalog'
@@ -7,19 +5,6 @@ import { InfoCard } from './InfoCard'
 import LatestPostsGroupMini from './LatestPostsGroupMini'
 import TagGroups from './TagGroups'
 import TouchMeCard from './TouchMeCard'
-
-const FaceBookPage = dynamic(
-  () => {
-    let facebook = <></>
-    try {
-      facebook = import('@/components/FacebookPage')
-    } catch (err) {
-      console.error(err)
-    }
-    return facebook
-  },
-  { ssr: false }
-)
 
 /**
  * Hexo主题右侧栏
@@ -58,9 +43,6 @@ export default function SideRight(props) {
         </div>
 
         {rightAreaSlot}
-
-        <FaceBookPage />
-        <Live2D />
 
         {/* 标签和成绩 */}
         <Card

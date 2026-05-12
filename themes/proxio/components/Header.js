@@ -1,13 +1,7 @@
 /* eslint-disable no-unreachable */
-import DashboardButton from '@/components/ui/dashboard/DashboardButton'
-import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
-import { SignedIn, SignedOut, UserButton } from '@clerk/nextjs'
-import throttle from 'lodash.throttle'
-import SmartLink from '@/components/SmartLink'
 import { useRouter } from 'next/router'
-import { useCallback, useEffect, useState } from 'react'
-import { DarkModeButton } from './DarkModeButton'
+import { useEffect, useState } from 'react'
 import { Logo } from './Logo'
 import { MenuList } from './MenuList'
 
@@ -34,8 +28,7 @@ export const Header = props => {
         // }
     }, [isDarkMode])
 
-    // 滚动监听
-    const throttleMs = 200
+    // const throttleMs = 200
     // const navBarScollListener = useCallback(
     //     throttle(() => {
     //         // eslint-disable-next-line camelcase

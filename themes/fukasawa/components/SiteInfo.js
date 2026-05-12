@@ -1,4 +1,3 @@
-import { BeiAnGongAn } from '@/components/BeiAnGongAn'
 import { siteConfig } from '@/lib/config'
 
 function SiteInfo({ title }) {
@@ -19,16 +18,6 @@ function SiteInfo({ title }) {
           </a>
           . <br />
         </span>
-        {siteConfig('BEI_AN') && (
-          <>
-            <i className='fas fa-shield-alt' />
-            <a href={siteConfig('BEI_AN_LINK')} className='mr-2'>
-              {siteConfig('BEI_AN')}
-            </a>
-            <br />
-          </>
-        )}
-        <BeiAnGongAn />
         <span className='hidden busuanzi_container_site_pv'>
           <i className='fas fa-eye' />
           <span className='px-1 busuanzi_value_site_pv'> </span>

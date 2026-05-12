@@ -1,5 +1,4 @@
 import { siteConfig } from '@/lib/config'
-import Live2D from '@/components/Live2D'
 import { useGlobal } from '@/lib/global'
 import SmartLink from '@/components/SmartLink'
 import dynamic from 'next/dynamic'
@@ -57,7 +56,6 @@ export const SideBar = (props) => {
             </aside>}
 
             <aside className="rounded  overflow-hidden mb-6">
-                <Live2D />
             </aside>
 
         </div>
