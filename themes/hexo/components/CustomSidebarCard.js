@@ -34,6 +34,16 @@ const withQueryParam = (url, key, value) => {
   }
 }
 
+const normalizeKeepAndroidOpenLang = lang => {
+  const value = String(lang || '').trim()
+  const lower = value.toLowerCase()
+  if (!value) return 'en'
+  if (lower.startsWith('en')) return 'en'
+  if (lower === 'zh' || lower === 'zh-cn' || lower === 'zh-hans') return 'zh-CN'
+  if (lower === 'zh-tw' || lower === 'zh-hk' || lower === 'zh-hant') return value
+  return value.split('-')[0] || 'en'
+}
+
 const getKeepAndroidOpenLink = (url, lang) => {
   if (!url) return ''
   try {
@@ -44,7 +54,9 @@ const getKeepAndroidOpenLink = (url, lang) => {
     if (linkParam === 'none') return ''
     if (linkParam) return linkParam
 
-    const locale = lang || parsed.searchParams.get('lang') || 'en'
+    const locale = normalizeKeepAndroidOpenLang(
+      lang || parsed.searchParams.get('lang') || 'en'
+    )
     return `https://keepandroidopen.org${locale === 'en' ? '' : `/${locale}/`}`
   } catch {
     return ''
@@ -81,15 +93,18 @@ const CustomSidebarCard = () => {
         .filter(Boolean)
   const scriptTargetId = 'hexo-custom-sidebar-card-script'
   const siteLang = siteConfig('LANG', 'zh-CN')
-  const scriptUrlWithLang = withQueryParam(scriptSrc, 'lang', siteLang)
+  const scriptLang = normalizeKeepAndroidOpenLang(
+    getUrlParam(scriptSrc, 'lang') || siteLang
+  )
+  const scriptUrlWithLang = withQueryParam(scriptSrc, 'lang', scriptLang)
   const scriptUrl = scriptUrlWithLang
     ? `${scriptUrlWithLang}${scriptUrlWithLang.includes('?') ? '&' : '?'}id=${scriptTargetId}`
     : ''
-  const iframeLang = getUrlParam(scriptUrl, 'lang') || siteLang
+  const iframeLang = siteLang
   const iframeClickUrl = link || getKeepAndroidOpenLink(scriptUrl, iframeLang)
   const iframeTextPatchScript = `(() => { const replace = () => { const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT); const nodes = []; while (walker.nextNode()) nodes.push(walker.currentNode); nodes.forEach(node => { node.nodeValue = node.nodeValue.replace(/安卓将成为一个封闭平台/g, 'Android 将成为一个封闭平台'); }); }; replace(); new MutationObserver(replace).observe(document.body, { childList: true, subtree: true, characterData: true }); })();`
   const iframeSrcDoc = scriptUrl
-    ? `<!doctype html><html lang="${escapeHtmlAttr(iframeLang)}"><head><meta charset="utf-8"><base target="_blank"><style>html,body{margin:0;padding:0;background:transparent;overflow:hidden}body{min-height:58px;display:flex;align-items:center}#${scriptTargetId}{width:100%}.kao-banner{border-radius:8px}</style></head><body><div id="${scriptTargetId}"></div><script src="${escapeHtmlAttr(scriptUrl)}"><\/script><script>${iframeTextPatchScript}<\/script></body></html>`
+    ? `<!doctype html><html lang="${escapeHtmlAttr(iframeLang)}"><head><meta charset="utf-8"><base target="_blank"><style>html,body{margin:0;padding:0;background:transparent;overflow:hidden}body{min-height:58px;display:flex;align-items:center}#${scriptTargetId}{width:100%}#${scriptTargetId},#${scriptTargetId} *{text-transform:none!important}.kao-banner{border-radius:8px}</style></head><body><div id="${scriptTargetId}"></div><script src="${escapeHtmlAttr(scriptUrl)}"><\/script><script>${iframeTextPatchScript}<\/script></body></html>`
     : ''
 
   if (!title && lines.length === 0 && !scriptSrc && !link) {
