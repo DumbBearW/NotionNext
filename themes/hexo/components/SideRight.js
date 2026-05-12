@@ -8,6 +8,7 @@ import Announcement from './Announcement'
 import Card from './Card'
 import Catalog from './Catalog'
 import CategoryGroup from './CategoryGroup'
+import CustomSidebarCard from './CustomSidebarCard'
 import { InfoCard } from './InfoCard'
 import LatestPostsGroup from './LatestPostsGroup'
 import TagGroups from './TagGroups'
@@ -85,6 +86,7 @@ export default function SideRight(props) {
             <TagGroups tags={tags} currentTag={currentTag} />
           </Card>
         )}
+        <CustomSidebarCard />
         {siteConfig('HEXO_WIDGET_LATEST_POSTS', null, CONFIG) &&
           latestPosts &&
           latestPosts.length > 0 && (
